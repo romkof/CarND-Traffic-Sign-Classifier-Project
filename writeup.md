@@ -107,9 +107,9 @@ and EPOCHS = 20, batch size was 128 adn droupout value was 0.7
 #### 4. Describe solution
 
 My final model results were:
-* training set accuracy of 0.961
-* validation set accuracy of 0.963 
-* test set accuracy of 0.938
+* training set accuracy of  1.000
+* validation set accuracy of 0.961
+* test set accuracy of 0.942
 
 Iterative approach was chosen for training the network, first architecture was chosen LeNet-5, because it is pretty simple and small network. This architecture was adjusted with making more deeper hidden layer and adding droupout.In future i would like to test the same datasets on bigger networks like VGG-16 and Xception networks. Adjusting an architecture was done be due to very high overfitting. Accuracy value was 1.0 just after 5 epochs. Despite data augmentation and high dropout value, current network has signs of overfitting.
 
@@ -139,13 +139,13 @@ Here are the results of the prediction:
 | Speed limit (30km/h)	| Speed limit (30km/h)      					|
 
 
-The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 0.938
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of 0.942
 
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+#### 3.Top 5 softmax probabilities
 
 The code for making predictions on my final model is located in the 26th cell of the Ipython notebook.
 
-For the all imagesб except for slippery roads sing, the model is sure what was displayed. Here is prediction for all 5 images:
+For the all images, except for slippery roads sing, the model is sure what was displayed. Here is prediction for all 5 images:
 
 ![alt text][softmax]
 
