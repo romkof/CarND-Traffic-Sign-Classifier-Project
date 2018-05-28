@@ -6,6 +6,11 @@
 [validation_bar]: ./validation_bar.png "Validation Bar"
 [training_bar]: ./training_bar.png "Training Bar"
 [testing_bar]: ./testing_bar.png "Testing Bar"
+[grayscaling]: ./grayscaling.png "Grayscaling"
+[minimax]: ./minimax.png "Minimax"
+
+[aug_example1]: ./aug_example1.png "Aug Example 1"
+[aug_example2]: ./aug_example2.png "Aug Example 2"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
@@ -43,42 +48,53 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 ### Design and Test a Model Architecture
 
-#### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+#### 1.Preprocessed the image data.
 
-As a first step, I decided to convert the images to grayscale because ...
+As a first step, I decided to generate additional data because some sign have to small number of examples, and network will be bias about classes, that presented in dataset the most.
 
-Here is an example of a traffic sign image before and after grayscaling.
+To add more data to the the data set, I used the great library  [imgaug](https://github.com/aleju/imgau) . I used different techniques like cropping, flipping, contrast normalization, superpixeling and others.
 
-![alt text][image2]
+Here is an examples augmented images:
 
-As a last step, I normalized the image data because ...
+![alt text][aug_example1]
+![alt text][aug_example2]
 
-I decided to generate additional data because ... 
+I decided to convert the images to grayscale because for signs classification color is not important information. Grayscaling images will help to reduce network training time. 
 
-To add more data to the the data set, I used the following techniques because ... 
+Here is an example of a traffic sign image  after grayscaling.
 
-Here is an example of an original image and an augmented image:
+![alt text][grayscaling]
 
-![alt text][image3]
+As a last step, I normalized the image data using Minimax optimization, because it help optimizer to perform better, having all values zero mean and equal variance.
 
-The difference between the original data set and the augmented data set is the following ... 
+ 
+Exploratory visualization The difference between the original data set and the augmented data set is the following:
+ - all classes have the same amout of examples
+ - amount of  most popular examples is increased by 35 %
 
 
-#### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+#### 2.Final model architecture.
 
 My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Input         		| 32x32x1 Grayscale image   					| 
+| Convolution 1x1     	| 1x1 stride, valid padding, outputs 28x28x8 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x8 				    |
+| Convolution 1x1	    | 1x1 stride, valid padding, outputs 10x10x32   |
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x32 		     		|
+| Fully connected		| input = 800, output = 400          			|
+| RELU					|												|
+| Dropout               | keep probability 0.7                          |
+| Fully connected		| input = 400, output = 100          			|
+| RELU					|												|
+| Dropout               | keep probability 0.7                          |
+| Softmax				| input = 400, output = 43        				|
 |						|												|
-|						|												|
+
  
 
 
